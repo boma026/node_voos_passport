@@ -5,6 +5,7 @@ import helmet from "helmet"; // Helmet é um middleware que ajuda a proteger a a
 import path from "path"; // O módulo 'path' fornece utilitários para trabalhar com caminhos de arquivos no sistema operacional.
 import router from "./routes"; //Esse router é um objeto do tipo Router do Express que agrupa todas as rotas da aplicação
 import { errorHandler, notFoundRequest } from "./routes/errorhandler";
+import passport from "passport";
 
 // Cria uma instância do servidor Express.
 const server = express();
@@ -21,6 +22,7 @@ server.use(express.urlencoded({ extended: true }));
 // Middleware para servir arquivos estáticos (como imagens, CSS, JS, etc.) a partir de um diretório público.
 // O caminho para o diretório público é definido dinamicamente com 'path.join', tornando o código mais portável entre diferentes sistemas operacionais.
 server.use(express.static(path.join(__dirname, "../public")));
+server.use(passport.initialize());
 
 server.use("/", router);
 server.use(notFoundRequest);
