@@ -6,6 +6,8 @@ import path from "path"; // O módulo 'path' fornece utilitários para trabalhar
 import router from "./routes"; //Esse router é um objeto do tipo Router do Express que agrupa todas as rotas da aplicação
 import { errorHandler, notFoundRequest } from "./routes/errorhandler";
 import passport from "passport";
+import { localStrategy } from "./libs/passport-local";
+import { bearerStrategy } from "./libs/passport-bearer";
 
 // Cria uma instância do servidor Express.
 const server = express();
@@ -22,7 +24,10 @@ server.use(express.urlencoded({ extended: true }));
 // Middleware para servir arquivos estáticos (como imagens, CSS, JS, etc.) a partir de um diretório público.
 // O caminho para o diretório público é definido dinamicamente com 'path.join', tornando o código mais portável entre diferentes sistemas operacionais.
 server.use(express.static(path.join(__dirname, "../public")));
+passport.use(localStrategy);
+passport.use(bearerStrategy);
 server.use(passport.initialize());
+
 
 server.use("/", router);
 server.use(notFoundRequest);
