@@ -1,8 +1,11 @@
 import { Strategy as LocalStrategy } from "passport-local";
-import { createUserToken, findUserByEmailAndPassword } from "../services/user";
+import { createUserJWT, createUserToken, findUserByEmailAndPassword } from "../services/user";
 import { User } from "../types/user";
 import { RequestHandler } from "express";
 import passport from "passport";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 type LocalStrategyResponse = {
     auth: {
@@ -18,7 +21,7 @@ export const localStrategy = new LocalStrategy({
 
     const user = await findUserByEmailAndPassword(email, password);
     if (user) {
-        const token = createUserToken(user);
+        const token = createUserJWT(user);
         const response: LocalStrategyResponse = {
             auth: { token },
             user

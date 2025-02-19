@@ -6,6 +6,7 @@ import voosRouter from "./voos"; // Importa as rotas de 'voos'.
 import { interferir } from "../Middlewares/interferir";
 import { localStrategy, localStrategyAuth } from "../libs/passport-local";
 import { bearerStrategy, bearerStrategyAuth } from "../libs/passport-bearer";
+import { jwtStrategyAuth } from "../libs/passport-jwt";
 
 // Cria uma instância do roteador do Express. O roteador é utilizado para definir e agrupar rotas da aplicação.
 const router = express.Router();
@@ -41,6 +42,10 @@ router.post("/login", localStrategyAuth, async(req, res) => {
 
 router.get("/private", bearerStrategyAuth, (req,res) => {
     res.json({msg: "acesso garantido"})
+})
+
+router.get("/privatejwt", jwtStrategyAuth, (req,res) => {
+    res.json({ msg: "Acessou JWT" });
 })
 // Exporta o roteador com todas as suas rotas definidas para ser utilizado em outros arquivos.
 export default router;

@@ -8,7 +8,9 @@ import { errorHandler, notFoundRequest } from "./routes/errorhandler";
 import passport from "passport";
 import { localStrategy } from "./libs/passport-local";
 import { bearerStrategy } from "./libs/passport-bearer";
+import dotenv from "dotenv";
 
+dotenv.config();
 // Cria uma instância do servidor Express.
 const server = express();
 
