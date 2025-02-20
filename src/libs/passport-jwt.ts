@@ -21,6 +21,8 @@ export const jwtStrategy = new JWTStrategy(options, async (payload, done) => {
     }
 });
 
+passport.use("jwt", jwtStrategy)
+
 export const jwtStrategyAuth: RequestHandler = (req, res, next) => {
     const authRequest = passport.authenticate("jwt",
         (err: any, user: User | false) => {
